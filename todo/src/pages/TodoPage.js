@@ -7,32 +7,18 @@ import styles from "./Todo.module.css";
 
 const TodoPage = (props) => {
   const [newTask, setNewTask] = useState("");
-  const { tasks, isloading } = useContext(TodoContext);
+  const { tasks, isloading, addTask } = useContext(TodoContext);
 
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
   };
 
-  const addTask = async () => {
-    if (newTask.trim() !== "") {
-      try {
-        await fetch("http://localhost:5000", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ task: newTask }),
-        });
-        fetchTasks();
-        setNewTask("");
-      } catch (error) {
-        console.error("Error adding task:", error);
-      }
-    }
-  };
-
   return (
     <div className={styles.card}>
+      {(isloading.add || isloading.get || isloading.delete) && (
+        <div className={styles.loader}></div>
+      )}
+
       <div className={styles.cardHeader}>
         <input
           className={styles.taskInput}
@@ -41,8 +27,12 @@ const TodoPage = (props) => {
           onChange={handleInputChange}
           placeholder="Enter a new task"
         />
-        <button className={styles.addButton} onClick={addTask}>
-          Add
+        <button
+          disabled={isloading.add}
+          className={styles.addButton}
+          onClick={() => addTask(newTask, setNewTask(""))}
+        >
+          {isloading.add ? "Adding.." : "Add"}
         </button>
       </div>
       {tasks.map((todoItem) => (

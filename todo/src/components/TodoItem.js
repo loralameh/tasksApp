@@ -1,20 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import styles from "./TodoItem.module.css";
+import TodoContext from "../providers/TodoProvider";
 
 const TodoItem = (props) => {
   const { todoItem } = props;
-
-  const deleteTask = async (index) => {
-    try {
-      await fetch(`http://localhost:5000/${index}`, {
-        method: "DELETE",
-      });
-      // fetchTasks();
-    } catch (error) {
-      console.error("Error deleting task:", error);
-    }
-  };
+  const { deleteTask, isloading } = useContext(TodoContext);
 
   return (
     <div className={styles.taskBox}>
@@ -23,6 +14,7 @@ const TodoItem = (props) => {
       </div>
       <div style={{ marginBlock: "5px" }}>
         <button
+          disabled={isloading.delete}
           className={styles.deleteButton}
           onClick={() => deleteTask(todoItem._id)}
         >
