@@ -23,6 +23,20 @@
   background-color: #165dec;
 }
 
+.clearAll {
+  background-color: #f26d6d66;
+  border: 1px solid red;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-inline-start: 10px;
+  padding: 10px;
+}
+
+.clearAll:hover {
+  background-color: #ed5a5a66;
+}
+
 .taskInput {
   width: 100%;
   padding: 10px;

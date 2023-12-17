@@ -22,6 +22,10 @@ app.post("/", async (req, res) => {
   await newTask.save();
   res.json(newTask);
 });
+app.delete("/", async (req, res) => {
+  const tasks = await Task.deleteMany({});
+  res.json(tasks);
+});
 app.delete("/:taskId", async (req, res) => {
   const {
     params: { taskId },

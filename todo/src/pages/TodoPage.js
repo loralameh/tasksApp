@@ -7,7 +7,7 @@ import styles from "./Todo.module.css";
 
 const TodoPage = (props) => {
   const [newTask, setNewTask] = useState("");
-  const { tasks, isloading, addTask } = useContext(TodoContext);
+  const { tasks, isloading, addTask, deleteAllTasks } = useContext(TodoContext);
 
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
@@ -35,6 +35,19 @@ const TodoPage = (props) => {
           onClick={() => addTask(newTask, setNewTask(""))}
         >
           {isloading.add ? "Adding.." : "Add"}
+        </button>
+        <button className={styles.clearAll} onClick={() => deleteAllTasks()}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill="red"
+              d="m10 12.6l.7.7l1.6-1.6l1.6 1.6l.8-.7L13 11l1.7-1.6l-.8-.8l-1.6 1.7l-1.6-1.7l-.7.8l1.6 1.6zM1 4h14V3H1zm0 3h14V6H1zm8 2.5V9H1v1h8zM9 13v-1H1v1z"
+            />
+          </svg>
         </button>
       </div>
       {tasks.map((todoItem) => (

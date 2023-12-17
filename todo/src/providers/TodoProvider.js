@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const TodoContext = createContext();
 
 export function TodoProvider({ children }) {
-  const [tasks, setTasks] = useState([{ name: "task1", _id: 1 }]);
+  const [tasks, setTasks] = useState([]);
   const [isloading, setIsloading] = useState({ add: false, delete: false });
 
   const fetchTasks = async () => {
@@ -54,16 +54,37 @@ export function TodoProvider({ children }) {
     }
   };
 
-  const deleteTask = async (index) => {
+  const deleteTask = async (id) => {
     try {
       setIsloading((prev) => {
         return { ...prev, delete: true };
       });
 
-      await fetch(`http://localhost:5000/${index}`, {
+      await fetch(`http://localhost:5000/${id}`, {
         method: "DELETE",
       });
       fetchTasks();
+      setIsloading((prev) => {
+        return { ...prev, delete: false };
+      });
+    } catch (error) {
+      setIsloading((prev) => {
+        return { ...prev, delete: false };
+      });
+
+      console.error("Error deleting task:", error);
+    }
+  };
+  const deleteAllTasks = async () => {
+    try {
+      setIsloading((prev) => {
+        return { ...prev, delete: true };
+      });
+
+      await fetch(`http://localhost:5000`, {
+        method: "DELETE",
+      });
+      setTasks([]);
       setIsloading((prev) => {
         return { ...prev, delete: false };
       });
@@ -80,7 +101,9 @@ export function TodoProvider({ children }) {
   }, []);
 
   return (
-    <TodoContext.Provider value={{ isloading, tasks, deleteTask, addTask }}>
+    <TodoContext.Provider
+      value={{ isloading, tasks, deleteTask, addTask, deleteAllTasks }}
+    >
       {children}
     </TodoContext.Provider>
   );
