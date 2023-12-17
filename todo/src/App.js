@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import TodoItem from "./components/TodoItem";
 
 function App() {
   const [tasks, setTasks] = useState([{ name: "task1", _id: 1 }]);
@@ -41,16 +42,6 @@ function App() {
     }
   };
 
-  const deleteTask = async (index) => {
-    try {
-      await fetch(`http://localhost:5000/${index}`, {
-        method: "DELETE",
-      });
-      fetchTasks();
-    } catch (error) {
-      console.error("Error deleting task:", error);
-    }
-  };
   console.log(tasks);
   return (
     <div>
@@ -65,11 +56,8 @@ function App() {
         <button onClick={addTask}>Add</button>
       </div>
       <ul>
-        {tasks.map((task) => (
-          <li key={task._id}>
-            {task.task}
-            <button onClick={() => deleteTask(task._id)}>Delete</button>
-          </li>
+        {tasks.map((todoItem) => (
+          <TodoItem key={todoItem._id} todoItem={todoItem} />
         ))}
       </ul>
     </div>
