@@ -16,7 +16,9 @@ const TodoPage = (props) => {
   return (
     <div className={styles.card}>
       {(isloading.add || isloading.get || isloading.delete) && (
-        <div className={styles.loader}></div>
+        <div className={styles.loaderContainer}>
+          <div className={styles.loader}></div>
+        </div>
       )}
 
       <div className={styles.cardHeader}>

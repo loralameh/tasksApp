@@ -35,3 +35,99 @@
   outline: none;
   border: 2px solid #3498db;
 }
+
+.loaderContainer {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+
+/*
+loader code retrieved from the following link:
+https://365webresources.com/best-pure-css-loading-spinners
+
+*/
+
+.loader {
+  width: 70px;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  inset: 0;
+  margin: auto;
+  background: #c7e0e5;
+  transform-origin: bottom;
+  animation: db10-1 3s infinite;
+}
+.loader::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  bottom: calc(50% - 4px);
+  background: #c7e0e5;
+  animation: db10-2 3s infinite;
+}
+
+@keyframes db10-1 {
+  0%,
+  10% {
+    transform: translate(0) scale(1);
+    box-shadow: 60px 0, 60px 0;
+  }
+  20%,
+  40% {
+    transform: translate(20px) scale(1);
+    box-shadow: 60px 0, 60px 0;
+  }
+  48% {
+    transform: translate(20px) scale(1);
+    box-shadow: 8px 0, 60px 0;
+  }
+  50% {
+    transform: translate(20px) scale(1.5);
+    box-shadow: 0 0, 60px 0;
+  }
+  58% {
+    transform: translate(20px) scale(1.5);
+    box-shadow: 0 0, 8px 0;
+  }
+  60%,
+  70% {
+    transform: translate(20px) scale(2);
+    box-shadow: 0 0, 0 0;
+  }
+
+  85% {
+    transform: translate(-50px) scale(2);
+    box-shadow: 0 0, 0 0;
+  }
+  87% {
+    transform: translate(-50px) scale(1);
+    box-shadow: 0 0, 0 0;
+  }
+  100% {
+    transform: translate(0) scale(1);
+    box-shadow: 0 0, 0 0;
+  }
+}
+
+@keyframes db10-2 {
+  20%,
+  70% {
+    left: 50%;
+  }
+  0%,
+  10%,
+  85%,
+  100% {
+    left: -25px;
+  }
+}
