@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-port = 5000;
+const port = process.env.PORT;
 const cors = require("cors");
 
 const Task = require("./taskModel");
@@ -35,6 +35,6 @@ const connectDB = (url) => {
   return mongoose.connect(url);
 };
 app.listen(port, async () => {
-  await connectDB("mongodb://localhost:27017/");
-  console.log("app is listening");
+  await connectDB(process.env.MONGO_URI);
+  console.log(`app is listening on port ${process.env.PORT}`);
 });
