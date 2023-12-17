@@ -1,0 +1,37 @@
+.card {
+  width: 35vw;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  padding: 30px 20px;
+}
+
+.cardHeader {
+  margin-bottom: 40px;
+  display: flex;
+}
+
+.addButton {
+  background-color: #2c6cea;
+  border-radius: 5px;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-inline-start: 10px;
+}
+.addButton:hover {
+  background-color: #165dec;
+}
+
+.taskInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.taskInput:focus {
+  outline: none;
+  border: 2px solid #3498db;
+}
