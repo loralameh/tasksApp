@@ -75,6 +75,7 @@ export function TodoProvider({ children }) {
       console.error("Error deleting task:", error);
     }
   };
+
   const deleteAllTasks = async () => {
     try {
       setIsloading((prev) => {
@@ -89,6 +90,7 @@ export function TodoProvider({ children }) {
         return { ...prev, delete: false };
       });
     } catch (error) {
+      console.log(error);
       setIsloading((prev) => {
         return { ...prev, delete: false };
       });
@@ -96,13 +98,45 @@ export function TodoProvider({ children }) {
       console.error("Error deleting task:", error);
     }
   };
+
+  const toggleCheckbox = async (id, isChecked) => {
+    try {
+      setIsloading((prev) => {
+        return { ...prev, edit: true };
+      });
+
+      await fetch(`http://localhost:5000/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isChecked: isChecked }),
+      });
+      fetchTasks();
+      setIsloading((prev) => {
+        return { ...prev, edit: false };
+      });
+    } catch (error) {
+      setIsloading((prev) => {
+        return { ...prev, edit: false };
+      });
+
+      console.error("Error deleting task:", error);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
   return (
     <TodoContext.Provider
-      value={{ isloading, tasks, deleteTask, addTask, deleteAllTasks }}
+      value={{
+        isloading,
+        tasks,
+        deleteTask,
+        addTask,
+        deleteAllTasks,
+        toggleCheckbox,
+      }}
     >
       {children}
     </TodoContext.Provider>

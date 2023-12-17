@@ -5,10 +5,17 @@ import TodoContext from "../providers/TodoProvider";
 
 const TodoItem = (props) => {
   const { todoItem } = props;
-  const { deleteTask, isloading } = useContext(TodoContext);
+  const { deleteTask, isloading, toggleCheckbox } = useContext(TodoContext);
 
   return (
     <div className={styles.taskBox}>
+      <div className={styles.checkBoxContainer}>
+        <input
+          type="checkbox"
+          checked={todoItem.isChecked}
+          onChange={() => toggleCheckbox(todoItem._id, !todoItem.isChecked)}
+        />
+      </div>
       <div className={styles.taskText}>
         <p>{todoItem.task}</p>
       </div>

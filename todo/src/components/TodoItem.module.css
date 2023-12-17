@@ -23,3 +23,9 @@
 .deleteButton:hover {
   background-color: #15157e;
 }
+
+.checkBoxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

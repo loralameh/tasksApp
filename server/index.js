@@ -12,27 +12,73 @@ app.use(
     methods: ["POST", "GET", "PUT", "PATCH", "DELETE"],
   })
 );
+//get all tasks
 app.get("/", async (req, res) => {
-  const tasks = await Task.find();
-  res.json(tasks);
+  try {
+    const tasks = await Task.find();
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error.message);
+  }
 });
+
+//add a task
 app.post("/", async (req, res) => {
-  console.log(req.body.task);
-  const newTask = new Task({ task: req.body.task });
-  await newTask.save();
-  res.json(newTask);
+  try {
+    const newTask = new Task({ task: req.body.task });
+    await newTask.save();
+    res.status(200).json(newTask);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error.message);
+  }
 });
-app.delete("/", async (req, res) => {
-  const tasks = await Task.deleteMany({});
-  res.json(tasks);
+
+//edit one task
+app.put("/:taskId", async (req, res) => {
+  try {
+    const {
+      params: { taskId },
+      body: { task, isChecked },
+    } = req;
+
+    const updatedData = task ? { isChecked, isChecked } : { isChecked };
+
+    const updatedtask = await Task.findByIdAndUpdate(taskId, updatedData, {
+      new: true,
+    });
+    res.status(200).json(updatedtask);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error.message);
+  }
 });
+
+//delete one task
 app.delete("/:taskId", async (req, res) => {
-  const {
-    params: { taskId },
-  } = req;
-  console.log(taskId);
-  const task = await Task.deleteOne({ _id: taskId });
-  res.json(task);
+  try {
+    const {
+      params: { taskId },
+    } = req;
+    const task = await Task.deleteOne({ _id: taskId });
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error.message);
+  }
+});
+
+//delete all tasks
+app.delete("/", async (req, res) => {
+  try {
+    const tasks = await Task.deleteMany({});
+    console.log(tasks);
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.log(error.message);
+  }
 });
 
 const connectDB = (url) => {

@@ -5,6 +5,10 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide task name"],
   },
+  isChecked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Task", TaskSchema);
