@@ -1,11 +1,10 @@
 import React, { useState, useContext } from "react";
 import TodoItem from "../components/TodoItem";
 
-import PropTypes from "prop-types";
 import TodoContext from "../providers/TodoProvider";
 import styles from "./Todo.module.css";
 
-const TodoPage = (props) => {
+const TodoPage = () => {
   const [newTask, setNewTask] = useState("");
   const { tasks, isloading, addTask, deleteAllTasks } = useContext(TodoContext);
 
@@ -59,7 +58,5 @@ const TodoPage = (props) => {
     </div>
   );
 };
-
-TodoPage.propTypes = {};
 
 export default TodoPage;
